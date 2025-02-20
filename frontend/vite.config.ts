@@ -8,10 +8,14 @@ export default defineConfig({
   server: {
     strictPort: true,
     port: 5000,
+    watch: {
+      usePolling: true
+    }
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+
     },
   },
 })
