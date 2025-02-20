@@ -1,0 +1,44 @@
+version: '3.8'
+ 
+services:
+  app:
+    container_name: iteh-projekat
+    restart: unless-stopped
+    image: iteh-projekat-dev:1.0.0
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/client/node_modules
+      - /home/predrag/order-it-slike:/usr/scr/app/api/public
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+      - '5000:5000'
+    networks:
+      - shared-network
+    depends_on:
+      - postgres
+ 
+  postgres:
+    image: postgres:16.1-alpine
+    container_name: iteh-projekat-postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: iteh-projekat
+    networks:
+      - shared-network
+    volumes:
+      - pg:/var/lib/postgresql/data
+ 
+networks:
+  shared-network:
+ 
+volumes:
+  pg:
+    driver: local
