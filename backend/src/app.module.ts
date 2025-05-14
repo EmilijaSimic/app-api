@@ -2,7 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DrzavaModule } from './drzava/drzava.module';
 import { InstitucijaModule } from './institucija/institucija.module';
+import { KorisnikModule } from './korisnik/korisnik.module';
 import { VisokoskolskaUstanovaModule } from './visokoskolska-ustanova/visokoskolska-ustanova.module';
 
 @Module({
@@ -13,11 +15,14 @@ import { VisokoskolskaUstanovaModule } from './visokoskolska-ustanova/visokoskol
       username: 'postgres',
       host: 'iteh-projekat-postgres',
       database: 'iteh-projekat',
+      port: 5432,
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     InstitucijaModule,
     VisokoskolskaUstanovaModule,
+    KorisnikModule,
+    DrzavaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
