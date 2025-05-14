@@ -1,7 +1,8 @@
 import { Drzava } from "src/drzava/entities/drzava.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, TableInheritance } from "typeorm";
 
 @Entity()
+@TableInheritance({column: {type:'varchar', name:'tipKorisnika'}})
 export class Korisnik {
 
     @PrimaryGeneratedColumn()
