@@ -1,19 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateDrzavaDto } from './dto/create-drzava.dto';
 import { UpdateDrzavaDto } from './dto/update-drzava.dto';
+import { Drzava } from './entities/drzava.entity';
 
 @Injectable()
 export class DrzavaService {
+  constructor(
+    @InjectRepository(Drzava) private drzavaRepo: Repository<Drzava>,
+  ) {}
   create(createDrzavaDto: CreateDrzavaDto) {
     return 'This action adds a new drzava';
   }
 
-  findAll() {
-    return `This action returns all drzava`;
+  async findAll() {
+    return await this.drzavaRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} drzava`;
+  async findOne(id: number) {
+    return await this.drzavaRepo.findOneBy({ id });
   }
 
   update(id: number, updateDrzavaDto: UpdateDrzavaDto) {

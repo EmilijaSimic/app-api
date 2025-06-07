@@ -6,6 +6,9 @@ import { DrzavaModule } from './drzava/drzava.module';
 import { InstitucijaModule } from './institucija/institucija.module';
 import { KorisnikModule } from './korisnik/korisnik.module';
 import { VisokoskolskaUstanovaModule } from './visokoskolska-ustanova/visokoskolska-ustanova.module';
+import { PolaznikModule } from './polaznik/polaznik.module';
+import { OdgovornoLiceModule } from './odgovorno-lice/odgovorno-lice.module';
+import { DrugaUstanovaModule } from './druga-ustanova/druga-ustanova.module';
 
 @Module({
   imports: [
@@ -23,6 +26,9 @@ import { VisokoskolskaUstanovaModule } from './visokoskolska-ustanova/visokoskol
     VisokoskolskaUstanovaModule,
     KorisnikModule,
     DrzavaModule,
+    PolaznikModule,
+    OdgovornoLiceModule,
+    DrugaUstanovaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
