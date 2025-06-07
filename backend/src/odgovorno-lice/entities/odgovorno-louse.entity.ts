@@ -1,3 +1,4 @@
+import { tipOdgLica } from "src/enums/tip-odgovornog-lica.enum";
 import { Korisnik } from "src/korisnik/entities/korisnik.entity";
 import { ChildEntity, Column } from "typeorm";
 
@@ -6,5 +7,5 @@ import { ChildEntity, Column } from "typeorm";
 export class OdgovornoLice extends Korisnik{
 
     @Column()
-    tipOdgLica:number;
+    tipOdgLica:tipOdgLica;
 }
