@@ -1,19 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateInstitucijaDto } from './dto/create-institucija.dto';
 import { UpdateInstitucijaDto } from './dto/update-institucija.dto';
+import { Institucija } from './entities/institucija.entity';
 
 @Injectable()
 export class InstitucijaService {
+  constructor(
+    @InjectRepository(Institucija)
+    private institucijaRepo: Repository<Institucija>,
+  ) {}
+
   create(createInstitucijaDto: CreateInstitucijaDto) {
-    return 'This action adds a new institucija';
+    return;
   }
 
-  findAll() {
-    return `This action returns all institucija`;
+  async findAll() {
+    return await this.institucijaRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} institucija`;
+  async findOne(id: number) {
+    return await this.institucijaRepo.findOneBy({ id });
   }
 
   update(id: number, updateInstitucijaDto: UpdateInstitucijaDto) {

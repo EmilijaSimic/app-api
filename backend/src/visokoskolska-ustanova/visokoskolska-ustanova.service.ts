@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
-import { CreateVisokoskolskaUstanovumDto } from './dto/create-visokoskolska-ustanovum.dto';
-import { UpdateVisokoskolskaUstanovumDto } from './dto/update-visokoskolska-ustanovum.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Drzava } from 'src/drzava/entities/drzava.entity';
+import { Repository } from 'typeorm';
+import { CreateVisokoskolskaUstanovaDto } from './dto/create-visokoskolska-ustanova.dto';
+import { UpdateVisokoskolskaUstanovaDto } from './dto/update-visokoskolska-ustanova.dto';
+import { VisokoskolskaUstanova } from './entities/visokoskolska-ustanova.entity';
 
 @Injectable()
 export class VisokoskolskaUstanovaService {
-  create(createVisokoskolskaUstanovumDto: CreateVisokoskolskaUstanovumDto) {
-    return 'This action adds a new visokoskolskaUstanovum';
+  constructor(
+    @InjectRepository(VisokoskolskaUstanova)
+    private visokoskolskaRepo: Repository<VisokoskolskaUstanova>,
+
+    @InjectRepository(Drzava) private drzavaRepo: Repository<Drzava>,
+  ) {}
+
+  async create(createVisokoskolskaUstanovaDto: CreateVisokoskolskaUstanovaDto) {
+    const drz = await this.drzavaRepo.findOneBy({
+      id: createVisokoskolskaUstanovaDto.drzavaId,
+    });
+
+    if (!drz) {
+      throw new Error('Država nije pronađena');
+    }
+    const ustanova = this.visokoskolskaRepo.create({
+      ...createVisokoskolskaUstanovaDto,
+      drzava: drz,
+    });
+    return await this.visokoskolskaRepo.save(ustanova);
   }
 
-  findAll() {
-    return `This action returns all visokoskolskaUstanova`;
+  async findAll() {
+    return await this.visokoskolskaRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} visokoskolskaUstanovum`;
+  async findOne(id: number) {
+    return await this.visokoskolskaRepo.findOneBy({ id });
   }
 
-  update(id: number, updateVisokoskolskaUstanovumDto: UpdateVisokoskolskaUstanovumDto) {
-    return `This action updates a #${id} visokoskolskaUstanovum`;
+  update(
+    id: number,
+    updateVisokoskolskaUstanovumDto: UpdateVisokoskolskaUstanovaDto,
+  ) {
+    return;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} visokoskolskaUstanovum`;
+  async remove(id: number) {
+    return await this.visokoskolskaRepo.delete(id);
   }
 }

@@ -8,6 +8,7 @@ import { KorisnikModule } from './korisnik/korisnik.module';
 import { VisokoskolskaUstanovaModule } from './visokoskolska-ustanova/visokoskolska-ustanova.module';
 import { PolaznikModule } from './polaznik/polaznik.module';
 import { OdgovornoLiceModule } from './odgovorno-lice/odgovorno-lice.module';
+import { DrugaUstanovaModule } from './druga-ustanova/druga-ustanova.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { OdgovornoLiceModule } from './odgovorno-lice/odgovorno-lice.module';
     DrzavaModule,
     PolaznikModule,
     OdgovornoLiceModule,
+    DrugaUstanovaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
