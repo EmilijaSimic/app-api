@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { CreateVisokoskolskaUstanovaDto } from './dto/create-visokoskolska-ustanova.dto';
+import { UpdateVisokoskolskaUstanovaDto } from './dto/update-visokoskolska-ustanova.dto';
 import { VisokoskolskaUstanovaService } from './visokoskolska-ustanova.service';
-import { CreateVisokoskolskaUstanovumDto } from './dto/create-visokoskolska-ustanovum.dto';
-import { UpdateVisokoskolskaUstanovumDto } from './dto/update-visokoskolska-ustanovum.dto';
 
 @Controller('visokoskolska-ustanova')
 export class VisokoskolskaUstanovaController {
-  constructor(private readonly visokoskolskaUstanovaService: VisokoskolskaUstanovaService) {}
+  constructor(
+    private readonly visokoskolskaUstanovaService: VisokoskolskaUstanovaService,
+  ) {}
 
   @Post()
-  create(@Body() createVisokoskolskaUstanovumDto: CreateVisokoskolskaUstanovumDto) {
-    return this.visokoskolskaUstanovaService.create(createVisokoskolskaUstanovumDto);
+  create(
+    @Body() createVisokoskolskaUstanovumDto: CreateVisokoskolskaUstanovaDto,
+  ) {
+    return this.visokoskolskaUstanovaService.create(
+      createVisokoskolskaUstanovumDto,
+    );
   }
 
   @Get()
@@ -23,8 +37,14 @@ export class VisokoskolskaUstanovaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVisokoskolskaUstanovumDto: UpdateVisokoskolskaUstanovumDto) {
-    return this.visokoskolskaUstanovaService.update(+id, updateVisokoskolskaUstanovumDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateVisokoskolskaUstanovumDto: UpdateVisokoskolskaUstanovaDto,
+  ) {
+    return this.visokoskolskaUstanovaService.update(
+      +id,
+      updateVisokoskolskaUstanovumDto,
+    );
   }
 
   @Delete(':id')
