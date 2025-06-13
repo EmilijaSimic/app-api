@@ -1,34 +1,34 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PolaznikService } from './polaznik.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreatePolaznikDto } from './dto/create-polaznik.dto';
 import { UpdatePolaznikDto } from './dto/update-polaznik.dto';
+import { PolaznikService } from './polaznik.service';
 
 @Controller('polaznik')
 export class PolaznikController {
   constructor(private readonly polaznikService: PolaznikService) {}
 
   @Post()
-  create(@Body() createPolaznikDto: CreatePolaznikDto) {
+  async create(@Body() createPolaznikDto: CreatePolaznikDto) {
     return this.polaznikService.create(createPolaznikDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.polaznikService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.polaznikService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePolaznikDto: UpdatePolaznikDto) {
+  async update(@Param('id') id: string, @Body() updatePolaznikDto: UpdatePolaznikDto) {
     return this.polaznikService.update(+id, updatePolaznikDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.polaznikService.remove(+id);
   }
 }
