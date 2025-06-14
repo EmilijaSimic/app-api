@@ -9,6 +9,8 @@ import { VisokoskolskaUstanovaModule } from './visokoskolska-ustanova/visokoskol
 import { PolaznikModule } from './polaznik/polaznik.module';
 import { OdgovornoLiceModule } from './odgovorno-lice/odgovorno-lice.module';
 import { DrugaUstanovaModule } from './druga-ustanova/druga-ustanova.module';
+import { KompetencijaModule } from './kompetencija/kompetencija.module';
+import { IzvorModule } from './izvor/izvor.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { DrugaUstanovaModule } from './druga-ustanova/druga-ustanova.module';
     PolaznikModule,
     OdgovornoLiceModule,
     DrugaUstanovaModule,
+    KompetencijaModule,
+    IzvorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
