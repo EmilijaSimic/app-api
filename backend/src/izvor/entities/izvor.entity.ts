@@ -1,5 +1,7 @@
 import { IzvorTip } from 'src/enums/izvor-tip.enum';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Mikrokredencijal } from 'src/mikrokredencijal/entities/mikrokredencijal.entity';
+import { OdgovornoLice } from 'src/odgovorno-lice/entities/odgovorno-louse.entity';
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Izvor {
@@ -14,4 +16,11 @@ export class Izvor {
 
   @Column()
   opis: string;
+
+  @OneToMany(()=>OdgovornoLice, odg=>odg.izvor)
+  odgovornaLica:OdgovornoLice[];
+
+  @OneToOne(() => Mikrokredencijal, mk => mk.izvor)
+  mikrokredencijal: Mikrokredencijal;
+
 }
