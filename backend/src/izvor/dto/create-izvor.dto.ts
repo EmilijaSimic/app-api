@@ -4,4 +4,5 @@ export class CreateIzvorDto {
   tip: IzvorTip;
   naziv: string;
   opis: string;
+  odgovornaLicaId: number[];
 }

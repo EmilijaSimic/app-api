@@ -49,12 +49,41 @@ export class MikrokredencijalPolaznikService {
   }
 
   async update(id: number, updateMikrokredencijalPolaznikDto: UpdateMikrokredencijalPolaznikDto) {
-    const mikrokredencijalPolaznik = await this.mikropolaznikRepository.findOneBy({id});
-     if (!mikrokredencijalPolaznik) {
-    throw new Error('Mikrokredencijal-Polaznika nije pronađen');
+     const mikropolaznik = await this.mikropolaznikRepository.findOne({
+    where: { id },
+    relations: ['mikrokredencijal', 'polaznik', 'odgovornoLice'],
+  });
+
+  if (!mikropolaznik) {
+    throw new Error('Mikrokredencijal-Polaznik nije pronađen');
   }
-    Object.assign(mikrokredencijalPolaznik, updateMikrokredencijalPolaznikDto);
-    return await this.mikrokredencijalRepo.save(mikrokredencijalPolaznik);
+
+  if (updateMikrokredencijalPolaznikDto.mikrokredencijalId !== undefined) {
+    const mk = await this.mikrokredencijalRepo.findOneBy({
+      id: updateMikrokredencijalPolaznikDto.mikrokredencijalId,
+    });
+    if (!mk) throw new Error('Mikrokredencijal nije pronađen');
+    mikropolaznik.mikrokredencijal = mk;
+  }
+  if (updateMikrokredencijalPolaznikDto.polaznikId !== undefined) {
+    const polaznik = await this.polaznikRepository.findOneBy({
+      id: updateMikrokredencijalPolaznikDto.polaznikId,
+    });
+    if (!polaznik) throw new Error('Polaznik nije pronađen');
+    mikropolaznik.polaznik = polaznik;
+  }
+
+  if (updateMikrokredencijalPolaznikDto.potpisaoId !== undefined) {
+    const odgLice = await this.odgLiceRepository.findOneBy({
+      id: updateMikrokredencijalPolaznikDto.potpisaoId,
+    });
+    if (!odgLice) throw new Error('Odgovorno lice nije pronađeno');
+    mikropolaznik.potpisao = odgLice;
+  }
+
+  Object.assign(mikropolaznik, updateMikrokredencijalPolaznikDto);
+
+  return await this.mikropolaznikRepository.save(mikropolaznik);
   }
 
   async remove(id: number) {

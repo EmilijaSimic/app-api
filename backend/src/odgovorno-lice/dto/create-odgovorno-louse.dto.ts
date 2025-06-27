@@ -7,4 +7,5 @@ export class CreateOdgovornoLiceDto {
     prezime: string;
     tipOdgLica: tipOdgLica;
     drzavaID: number;
+    izvoriId: number[];
 }

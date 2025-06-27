@@ -47,14 +47,44 @@ export class MikrokredencijalService {
     return await this.mikrokredencijalRepo.findOneBy({id});
   }
 
-  async update(id: number, updateMikrokredencijalDto: UpdateMikrokredencijalDto) {
-    const mikrokredencijal = await this.mikrokredencijalRepo.findOneBy({id});
-     if (!mikrokredencijal) {
+  async update(id: number, dto: UpdateMikrokredencijalDto) {
+  const mikrokredencijal = await this.mikrokredencijalRepo.findOne({
+    where: { id },
+    relations: ['izdavackoTelo', 'izvor', 'preduslov'],
+  });
+
+  if (!mikrokredencijal) {
     throw new Error('Mikrokredencijal nije pronađen');
   }
-    Object.assign(mikrokredencijal, updateMikrokredencijalDto);
-    return await this.mikrokredencijalRepo.save(mikrokredencijal);
+
+  if (dto.izdavackoTeloId !== undefined) {
+    const institucija = await this.institucijaRepository.findOneBy({
+      id: dto.izdavackoTeloId,
+    });
+    if (!institucija) throw new Error('Institucija nije pronađena');
+    mikrokredencijal.izdavackoTelo = institucija;
   }
+
+  if (dto.izvorId !== undefined) {
+    const izvor = await this.izvorRepository.findOneBy({
+      id: dto.izvorId,
+    });
+    if (!izvor) throw new Error('Izvor nije pronađen');
+    mikrokredencijal.izvor = izvor;
+  }
+
+  if (dto.preduslovId !== undefined) {
+    const preduslov = await this.preduslovRepository.findOneBy({
+      id: dto.preduslovId,
+    });
+    if (!preduslov) throw new Error('Preduslov nije pronađen');
+    mikrokredencijal.preduslov = preduslov;
+  }
+
+  Object.assign(mikrokredencijal, dto);
+
+  return await this.mikrokredencijalRepo.save(mikrokredencijal);
+}
 
   async remove(id: number) {
     return this.mikrokredencijalRepo.delete(id);
