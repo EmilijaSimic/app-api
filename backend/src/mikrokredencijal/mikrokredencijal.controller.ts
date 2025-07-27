@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MikrokredencijalService } from './mikrokredencijal.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateMikrokredencijalDto } from './dto/create-mikrokredencijal.dto';
 import { UpdateMikrokredencijalDto } from './dto/update-mikrokredencijal.dto';
+import { MikrokredencijalService } from './mikrokredencijal.service';
 
 @Controller('mikrokredencijal')
 export class MikrokredencijalController {
@@ -31,4 +31,25 @@ export class MikrokredencijalController {
   remove(@Param('id') id: string) {
     return this.mikrokredencijalService.remove(+id);
   }
+
+  @Get('polaznik/:id')
+  async findForPolaznik(@Param('id') id: number) {
+    return this.mikrokredencijalService.findByPolaznik(id);
+  }
+
+  @Get('polaznik/:id/potpisani')
+  async findPotpisani(@Param('id')id:number){
+    return this.mikrokredencijalService.findPotpisani(id);
+  }
+
+  @Get('polaznik/:id/nepotpisani')
+  async findNepotpisani(@Param('id')id:number){
+    return this.mikrokredencijalService.findNepotpisani(id);
+  }
+
+    @Get('profesor/:id/mikrokredencijali')
+  async findForProfesor(@Param('id')id:number){
+    return this.mikrokredencijalService.findByProfesor(id);
+  }
+
 }

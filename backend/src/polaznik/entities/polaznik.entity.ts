@@ -8,6 +8,6 @@ export class Polaznik extends Korisnik{
     @Column()
     brojIndeksa:string;
 
-    @OneToMany(()=>MikrokredencijalPolaznik, mp=>mp.mikrokredencijal)
+    @OneToMany(()=>MikrokredencijalPolaznik, mp=>mp.polaznik)
     mikropolaznici:MikrokredencijalPolaznik[];
 }

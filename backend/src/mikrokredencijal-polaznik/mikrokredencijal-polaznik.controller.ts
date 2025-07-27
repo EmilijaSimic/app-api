@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MikrokredencijalPolaznikService } from './mikrokredencijal-polaznik.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateMikrokredencijalPolaznikDto } from './dto/create-mikrokredencijal-polaznik.dto';
 import { UpdateMikrokredencijalPolaznikDto } from './dto/update-mikrokredencijal-polaznik.dto';
+import { MikrokredencijalPolaznikService } from './mikrokredencijal-polaznik.service';
 
 @Controller('mikrokredencijal-polaznik')
 export class MikrokredencijalPolaznikController {
