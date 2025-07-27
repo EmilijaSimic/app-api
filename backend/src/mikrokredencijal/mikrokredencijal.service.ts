@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Institucija } from 'src/institucija/entities/institucija.entity';
 import { Izvor } from 'src/izvor/entities/izvor.entity';
+import { MikrokredencijalPolaznik } from 'src/mikrokredencijal-polaznik/entities/mikrokredencijal-polaznik.entity';
 import { Preduslov } from 'src/preduslov/entities/preduslov.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateMikrokredencijalDto } from './dto/create-mikrokredencijal.dto';
 import { UpdateMikrokredencijalDto } from './dto/update-mikrokredencijal.dto';
 import { Mikrokredencijal } from './entities/mikrokredencijal.entity';
@@ -24,6 +25,7 @@ export class MikrokredencijalService {
     @InjectRepository(Institucija)
     private institucijaRepository:Repository<Institucija>,
 
+    private dataSource: DataSource
   ){}
 
   async create(createMikrokredencijalDto: CreateMikrokredencijalDto) {
@@ -89,4 +91,52 @@ export class MikrokredencijalService {
   async remove(id: number) {
     return this.mikrokredencijalRepo.delete(id);
   }
+
+  async findByPolaznik(polaznikId: number) {
+  const povezano = await this.dataSource
+    .getRepository(MikrokredencijalPolaznik)
+    .createQueryBuilder('mp')
+    .leftJoinAndSelect('mp.mikrokredencijal', 'mk')
+    .where('mp.polaznik.id = :id', { id: polaznikId })
+    .getMany();
+
+  return povezano.map(mp => mp.mikrokredencijal);
+}
+
+async findPotpisani(polaznikId: number) {
+  const rezultat = await this.dataSource
+    .getRepository(MikrokredencijalPolaznik)
+    .createQueryBuilder('mp')
+    .leftJoinAndSelect('mp.mikrokredencijal', 'mk')
+    .where('mp.polaznik.id = :id', { id: polaznikId })
+    .andWhere('mp.potpisao IS NOT NULL')
+    .getMany();
+
+  return rezultat.map(mp => mp.mikrokredencijal);
+}
+
+async findNepotpisani(polaznikId: number) {
+  const rezultat = await this.dataSource
+    .getRepository(MikrokredencijalPolaznik)
+    .createQueryBuilder('mp')
+    .leftJoinAndSelect('mp.mikrokredencijal', 'mk')
+    .where('mp.polaznik.id = :id', { id: polaznikId })
+    .andWhere('mp.potpisao IS NULL')
+    .getMany();
+
+  return rezultat.map(mp => mp.mikrokredencijal);
+}
+
+async findByProfesor(profesorId: number) {
+  const mikrokredencijali = await this.dataSource
+    .getRepository(Mikrokredencijal)
+    .createQueryBuilder('mk')
+    .leftJoinAndSelect('mk.izvor', 'izvor')
+    .leftJoin('izvor.odgovornaLica', 'prof')
+    .where('prof.id = :id', { id: profesorId })
+    .getMany();
+
+  return mikrokredencijali;
+}
+
 }
