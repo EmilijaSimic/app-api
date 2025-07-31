@@ -56,9 +56,6 @@ export class Mikrokredencijal {
   supervizijaProcene: string;
 
   @Column()
-  ostvarenaOcena: number;
-
-  @Column()
   opcijeIntegracije: string;
 
   @Column()

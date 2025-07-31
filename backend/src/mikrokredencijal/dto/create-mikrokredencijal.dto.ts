@@ -12,7 +12,6 @@ export class CreateMikrokredencijalDto {
   formaParticipacije: string;
   tipOsiguranjaKvaliteta: string;
   supervizijaProcene: string;
-  ostvarenaOcena: number;
   opcijeIntegracije: string;
   dodatneInformacije: string;
   trajanje: string;

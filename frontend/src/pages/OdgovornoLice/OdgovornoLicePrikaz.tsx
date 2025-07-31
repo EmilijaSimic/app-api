@@ -1,3 +1,5 @@
+import Mikrokredencijali from '../../components/Mikrokredencijali';
+
 interface Korisnik {
   id: number;
   email: string;
@@ -9,6 +11,6 @@ interface OdgovornoLicePrikazProps {
 }
 
 function OdgovornoLicePrikaz({ user }: OdgovornoLicePrikazProps) {
-  return <h1>odgovorno lice {user.ime}</h1>;
+  return <Mikrokredencijali id={user.id} tip="profesor" />;
 }
 export default OdgovornoLicePrikaz;
