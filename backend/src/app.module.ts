@@ -14,6 +14,7 @@ import { PreduslovModule } from './preduslov/preduslov.module';
 import { VisokoskolskaUstanovaModule } from './visokoskolska-ustanova/visokoskolska-ustanova.module';
 import { MikrokredencijalModule } from './mikrokredencijal/mikrokredencijal.module';
 import { MikrokredencijalPolaznikModule } from './mikrokredencijal-polaznik/mikrokredencijal-polaznik.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { MikrokredencijalPolaznikModule } from './mikrokredencijal-polaznik/mikr
     PreduslovModule,
     MikrokredencijalModule,
     MikrokredencijalPolaznikModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],
