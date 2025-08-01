@@ -47,6 +47,11 @@ export class MikrokredencijalController {
     return this.mikrokredencijalService.findNepotpisani(id);
   }
 
+  @Get('polaznik/:id/informalni')
+  async findInformalni(@Param('id')id:number){
+    return this.mikrokredencijalService.findInformalni(id);
+  }
+
     @Get('profesor/:id/mikrokredencijali')
   async findForProfesor(@Param('id')id:number){
     return this.mikrokredencijalService.findByProfesor(id);

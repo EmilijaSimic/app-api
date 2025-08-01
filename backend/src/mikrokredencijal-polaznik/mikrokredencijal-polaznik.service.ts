@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Mikrokredencijal } from 'src/mikrokredencijal/entities/mikrokredencijal.entity';
 import { OdgovornoLice } from 'src/odgovorno-lice/entities/odgovorno-louse.entity';
@@ -10,33 +10,56 @@ import { MikrokredencijalPolaznik } from './entities/mikrokredencijal-polaznik.e
 
 @Injectable()
 export class MikrokredencijalPolaznikService {
-
   constructor(
+    @InjectRepository(MikrokredencijalPolaznik)
+    private mikropolaznikRepository: Repository<MikrokredencijalPolaznik>,
 
-      @InjectRepository(MikrokredencijalPolaznik)
-      private mikropolaznikRepository:Repository<MikrokredencijalPolaznik>,
+    @InjectRepository(Mikrokredencijal)
+    private mikrokredencijalRepo: Repository<Mikrokredencijal>,
 
-      @InjectRepository(Mikrokredencijal)
-      private mikrokredencijalRepo:Repository<Mikrokredencijal>,
-  
-      @InjectRepository(Polaznik)
-      private polaznikRepository:Repository<Polaznik>,
-  
-      @InjectRepository(OdgovornoLice)
-      private odgLiceRepository:Repository<OdgovornoLice>,
-  
-    ){}
+    @InjectRepository(Polaznik)
+    private polaznikRepository: Repository<Polaznik>,
 
-  async create(createMikrokredencijalPolaznikDto: CreateMikrokredencijalPolaznikDto) {
-    const mikrokredencijal = await this.mikrokredencijalRepo.findOneBy({id:createMikrokredencijalPolaznikDto.mikrokredencijalId});
-    const polaznik = await this.polaznikRepository.findOneBy({id:createMikrokredencijalPolaznikDto.polaznikId});
-    const odgLice = await this.odgLiceRepository.findOneBy({id:createMikrokredencijalPolaznikDto.potpisaoId});
+    @InjectRepository(OdgovornoLice)
+    private odgLiceRepository: Repository<OdgovornoLice>,
+  ) {}
 
-    if (!mikrokredencijal || !polaznik || !odgLice) {
+  async create(
+    createMikrokredencijalPolaznikDto: CreateMikrokredencijalPolaznikDto,
+  ) {
+    const postoji = await this.mikropolaznikRepository.findOne({
+      where: {
+        polaznik: { id: createMikrokredencijalPolaznikDto.polaznikId },
+        mikrokredencijal: {
+          id: createMikrokredencijalPolaznikDto.mikrokredencijalId,
+        },
+      },
+    });
+
+    if (postoji) {
+      throw new BadRequestException(
+        'Već postoji zapis za tog polaznika i mikrokredencijal.',
+      );
+    }
+    const mikrokredencijal = await this.mikrokredencijalRepo.findOneBy({
+      id: createMikrokredencijalPolaznikDto.mikrokredencijalId,
+    });
+    const polaznik = await this.polaznikRepository.findOneBy({
+      id: createMikrokredencijalPolaznikDto.polaznikId,
+    });
+    const odgLice = await this.odgLiceRepository.findOneBy({
+      id: createMikrokredencijalPolaznikDto.potpisaoId,
+    });
+
+    if (!mikrokredencijal || !polaznik) {
       throw new Error('Nije pronajeno!');
     }
 
-    const mikrokredencijalPolaznik = this.mikropolaznikRepository.create({...createMikrokredencijalPolaznikDto, polaznik:polaznik, mikrokredencijal:mikrokredencijal, potpisao:odgLice});
+    const mikrokredencijalPolaznik = this.mikropolaznikRepository.create({
+      ...createMikrokredencijalPolaznikDto,
+      polaznik: polaznik,
+      mikrokredencijal: mikrokredencijal,
+    });
     return this.mikropolaznikRepository.save(mikrokredencijalPolaznik);
   }
 
@@ -45,43 +68,37 @@ export class MikrokredencijalPolaznikService {
   }
 
   async findOne(id: number) {
-    return await this.mikropolaznikRepository.findOneBy({id});
+    return await this.mikropolaznikRepository.findOneBy({ id });
   }
 
-  async update(id: number, updateMikrokredencijalPolaznikDto: UpdateMikrokredencijalPolaznikDto) {
-     const mikropolaznik = await this.mikropolaznikRepository.findOne({
-    where: { id },
-    relations: ['mikrokredencijal', 'polaznik', 'odgovornoLice'],
-  });
+  async update(
+    id: number,
+    updateDto: UpdateMikrokredencijalPolaznikDto,
+  ) {
+    const mikropolaznik = await this.mikropolaznikRepository.findOne({
+      where: { id },
+      //relations: ['mikrokredencijal', 'polaznik', 'odgovornoLice'],
+    });
 
-  if (!mikropolaznik) {
+    if (!mikropolaznik) {
+      throw new Error('Mikrokredencijal-Polaznik nije pronađen');
+    }
+  
+    if (!mikropolaznik) {
     throw new Error('Mikrokredencijal-Polaznik nije pronađen');
   }
 
-  if (updateMikrokredencijalPolaznikDto.mikrokredencijalId !== undefined) {
-    const mk = await this.mikrokredencijalRepo.findOneBy({
-      id: updateMikrokredencijalPolaznikDto.mikrokredencijalId,
-    });
-    if (!mk) throw new Error('Mikrokredencijal nije pronađen');
-    mikropolaznik.mikrokredencijal = mk;
-  }
-  if (updateMikrokredencijalPolaznikDto.polaznikId !== undefined) {
-    const polaznik = await this.polaznikRepository.findOneBy({
-      id: updateMikrokredencijalPolaznikDto.polaznikId,
-    });
-    if (!polaznik) throw new Error('Polaznik nije pronađen');
-    mikropolaznik.polaznik = polaznik;
-  }
+    if (updateDto.potpisaoId !== undefined) {
+      const odgLice = await this.odgLiceRepository.findOneBy({
+        id: updateDto.potpisaoId,
+      });
+      if (!odgLice) throw new Error('Odgovorno lice nije pronađeno');
+      mikropolaznik.potpisao = odgLice;
+    }
 
-  if (updateMikrokredencijalPolaznikDto.potpisaoId !== undefined) {
-    const odgLice = await this.odgLiceRepository.findOneBy({
-      id: updateMikrokredencijalPolaznikDto.potpisaoId,
-    });
-    if (!odgLice) throw new Error('Odgovorno lice nije pronađeno');
-    mikropolaznik.potpisao = odgLice;
-  }
-
-  Object.assign(mikropolaznik, updateMikrokredencijalPolaznikDto);
+    if (updateDto.ispunjenUslov !== undefined) {
+      mikropolaznik.ispunjenUslov = updateDto.ispunjenUslov;
+    }
 
   return await this.mikropolaznikRepository.save(mikropolaznik);
   }

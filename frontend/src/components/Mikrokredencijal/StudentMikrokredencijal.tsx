@@ -11,39 +11,62 @@ type Mikrokredencijal = {
   nivo: string;
   odrzavanje: string;
   opcijeIntegracije: string;
-  ostvarenaOcena: number;
   supervizijaProcene: string;
   tipOsiguranjaKvaliteta: string;
   trajanje: string;
   vrstaProcene: string;
 };
 
-
 type Props = {
-  id: number; //bio polaznikId
-  tip: 'potpisani' | 'nepotpisani' | 'profesor'; //dodato
+  id: number;  
+  tip: 'potpisani' | 'nepotpisani' | 'informalni'; 
 };
 
-function Mikrokredencijali({ id, tip }: Props) { //dodati tipovi
+function StudentMikrokredencijali({ id, tip }: Props) { 
   const [mikros, setMikros] = useState<Mikrokredencijal[]>([]);
 
   useEffect(() => {
-    let endpoint = '';   //sve ovo dodato
-
-  if (tip === 'profesor') {
-    endpoint = `http://localhost:3000/mikrokredencijal/profesor/${id}/mikrokredencijali`;
-  } else {
-    endpoint = `http://localhost:3000/mikrokredencijal/polaznik/${id}/${tip}`;
-  }
-    fetch(endpoint) //bilo `http://localhost:3000/mikrokredencijal/polaznik/${polaznikId}`
+    fetch(`http://localhost:3000/mikrokredencijal/polaznik/${id}/${tip}`) 
       .then(res => res.json())
       .then(data => {
       console.log("Dobijeni mikrokredencijali:", data);
       setMikros(data);
     })
       .catch(err => console.error(err));
-  }, [id, tip]); //polaznikId
-//u returnu isto polaznikid
+  }, [id, tip]); 
+
+  const apliciranje = async (mkId: number) => {
+
+      fetch('http://localhost:3000/mikrokredencijal-polaznik', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          polaznikId: id,
+          mikrokredencijalId: mkId,
+          potpisaoId: null,
+          blokcejnZapis: ' ',
+          ispunjenUslov: false,
+          opisUslova: ' ',
+        }),
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.message || 'Greška pri dodavanju.');
+          }
+          return res.json();
+        })
+        .then(() => {
+          alert('Uspešno dodato!');
+        })
+        .catch((err) => {
+          console.error(err);
+          alert(err.message);
+        });
+
+  };
+
+
   return (
     <div>
       <h2>Mikrokredencijali za polaznika #{id}</h2>
@@ -58,12 +81,12 @@ function Mikrokredencijali({ id, tip }: Props) { //dodati tipovi
               Trajanje: {mk.trajanje}<br />
               Oblik: {mk.odrzavanje}<br />
               Participacija: {mk.formaParticipacije}<br />
-              Ocena: {mk.ostvarenaOcena}<br />
               Vrsta provere: {mk.vrstaProcene}<br />
               Supervizija: {mk.supervizijaProcene}<br />
               Osiguranje kvaliteta: {mk.tipOsiguranjaKvaliteta}<br />
               Integracija: {mk.opcijeIntegracije}<br />
               Dodatno: {mk.dodatneInformacije}
+              {tip === 'informalni' && (<button onClick={() => apliciranje(mk.id)}>Apliciraj</button>) }
           </li>
         ))}
       </ul>
@@ -71,4 +94,4 @@ function Mikrokredencijali({ id, tip }: Props) { //dodati tipovi
   );
 }
 
-export default Mikrokredencijali;
+export default StudentMikrokredencijali;
