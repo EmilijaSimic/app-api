@@ -1,3 +1,4 @@
+import LogoutDugme from '../../components/LogoutDugme/LogoutDugme';
 import MikrokredencijalPolaznik from '../../components/MikrokredencijalPolaznik/MikrokredencijalPolaznik';
 
 interface Korisnik {
@@ -12,6 +13,11 @@ interface AdminPrikazProps {
 }
 
 function AdminPrikaz({ user }: AdminPrikazProps) {
-  return <MikrokredencijalPolaznik />;
+  return (
+    <>
+      <MikrokredencijalPolaznik />;
+      <LogoutDugme />
+    </>
+  );
 }
 export default AdminPrikaz;
