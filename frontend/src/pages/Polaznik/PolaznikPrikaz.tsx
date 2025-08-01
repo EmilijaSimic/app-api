@@ -14,6 +14,7 @@ function PolaznikPrikaz({ user }: PolaznikPrikazProps) {
   <div>
     <StudentMikrokredencijali id = {user.id} tip = "potpisani"/>
     <StudentMikrokredencijali id = {user.id} tip = "nepotpisani"/>
+    <StudentMikrokredencijali id = {user.id} tip = "informalni"/>
   </div>);
   //<Mikrokredencijali id={user.id} tip="potpisani" />;
 }

@@ -18,8 +18,8 @@ type Mikrokredencijal = {
 };
 
 type Props = {
-  id: number; 
-  tip: 'potpisani' | 'nepotpisani'; 
+  id: number;  
+  tip: 'potpisani' | 'nepotpisani' | 'informalni'; 
 };
 
 function StudentMikrokredencijali({ id, tip }: Props) { 
@@ -34,6 +34,38 @@ function StudentMikrokredencijali({ id, tip }: Props) {
     })
       .catch(err => console.error(err));
   }, [id, tip]); 
+
+  const apliciranje = async (mkId: number) => {
+
+      fetch('http://localhost:3000/mikrokredencijal-polaznik', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          polaznikId: id,
+          mikrokredencijalId: mkId,
+          potpisaoId: null,
+          blokcejnZapis: ' ',
+          ispunjenUslov: false,
+          opisUslova: ' ',
+        }),
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.message || 'Greška pri dodavanju.');
+          }
+          return res.json();
+        })
+        .then(() => {
+          alert('Uspešno dodato!');
+        })
+        .catch((err) => {
+          console.error(err);
+          alert(err.message);
+        });
+
+  };
+
 
   return (
     <div>
@@ -54,6 +86,7 @@ function StudentMikrokredencijali({ id, tip }: Props) {
               Osiguranje kvaliteta: {mk.tipOsiguranjaKvaliteta}<br />
               Integracija: {mk.opcijeIntegracije}<br />
               Dodatno: {mk.dodatneInformacije}
+              {tip === 'informalni' && (<button onClick={() => apliciranje(mk.id)}>Apliciraj</button>) }
           </li>
         ))}
       </ul>

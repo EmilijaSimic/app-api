@@ -132,6 +132,17 @@ export class MikrokredencijalService {
 
     return rezultat.map((mp) => mp.mikrokredencijal);
   }
+
+  async findInformalni(polaznikId: number): Promise<Mikrokredencijal[]> {
+  return this.mikrokredencijalRepo
+    .createQueryBuilder('mk')
+    .leftJoin('mk.izvor', 'izvor')
+    .leftJoin('mk.mikropolaznici', 'mp', 'mp.polaznik.id = :polaznikId', { polaznikId })
+    .where('izvor.tip = :tip', { tip: 'informalan' })
+    .andWhere('mp.id IS NULL')
+    .getMany();
+}
+
     async findByProfesor(profesorId: number) {
     const mikrokredencijali = await this.dataSource
     .getRepository(MikrokredencijalPolaznik)
