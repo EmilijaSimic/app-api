@@ -1,4 +1,5 @@
-import StudentMikrokredencijali from "../../components/Mikrokredencijal/StudentMikrokredencijal";
+import LogoutDugme from '../../components/LogoutDugme/LogoutDugme';
+import StudentMikrokredencijali from '../../components/Mikrokredencijal/StudentMikrokredencijal';
 
 interface Korisnik {
   id: number;
@@ -11,11 +12,12 @@ interface PolaznikPrikazProps {
 }
 function PolaznikPrikaz({ user }: PolaznikPrikazProps) {
   return (
-  <div>
-    <StudentMikrokredencijali id = {user.id} tip = "potpisani"/>
-    <StudentMikrokredencijali id = {user.id} tip = "nepotpisani"/>
-    <StudentMikrokredencijali id = {user.id} tip = "informalni"/>
-  </div>);
+    <div>
+      <StudentMikrokredencijali id={user.id} tip="potpisani" />
+      <StudentMikrokredencijali id={user.id} tip="nepotpisani" />
+      <LogoutDugme />
+    </div>
+  );
   //<Mikrokredencijali id={user.id} tip="potpisani" />;
 }
 export default PolaznikPrikaz;

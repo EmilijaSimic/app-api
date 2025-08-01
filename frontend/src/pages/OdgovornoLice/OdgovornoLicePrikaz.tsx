@@ -1,4 +1,5 @@
-import ProfesorMikrokredencijali from "../../components/Mikrokredencijal/ProfesorMikrokredencijal";
+import LogoutDugme from '../../components/LogoutDugme/LogoutDugme';
+import ProfesorMikrokredencijali from '../../components/Mikrokredencijal/ProfesorMikrokredencijal';
 
 interface Korisnik {
   id: number;
@@ -11,6 +12,11 @@ interface OdgovornoLicePrikazProps {
 }
 
 function OdgovornoLicePrikaz({ user }: OdgovornoLicePrikazProps) {
-  return <ProfesorMikrokredencijali id={user.id} />;
+  return (
+    <>
+      <ProfesorMikrokredencijali id={user.id} />
+      <LogoutDugme />
+    </>
+  );
 }
 export default OdgovornoLicePrikaz;
