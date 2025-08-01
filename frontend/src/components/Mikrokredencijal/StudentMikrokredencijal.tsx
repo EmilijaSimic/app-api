@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import StudentOsnova from '../MikrokredencijalOsnova/StudentOsnova';
 
 type Mikrokredencijal = {
   id: number;
@@ -35,61 +36,23 @@ function StudentMikrokredencijali({ id, tip }: Props) {
       .catch(err => console.error(err));
   }, [id, tip]); 
 
-  const apliciranje = async (mkId: number) => {
+  var naslov = "";
+  if(tip==="potpisani"){
+    naslov="Stečeni mikrokredencijali: "
+  }else if(tip==="nepotpisani"){
+    naslov="Mikrokredencijali na čekanju: "
+  }else {naslov="Možeš da apliciraš za: "
+  }
 
-      fetch('http://localhost:3000/mikrokredencijal-polaznik', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          polaznikId: id,
-          mikrokredencijalId: mkId,
-          potpisaoId: null,
-          blokcejnZapis: ' ',
-          ispunjenUslov: false,
-          opisUslova: ' ',
-        }),
-      })
-        .then(async (res) => {
-          if (!res.ok) {
-            const errData = await res.json();
-            throw new Error(errData.message || 'Greška pri dodavanju.');
-          }
-          return res.json();
-        })
-        .then(() => {
-          alert('Uspešno dodato!');
-        })
-        .catch((err) => {
-          console.error(err);
-          alert(err.message);
-        });
-
+  const izmeniMikrokredencijal = (mkId: number) => {
+    setMikros(prev => prev.filter(mk => mk.id !== mkId));
   };
-
 
   return (
     <div>
-      <h2>Mikrokredencijali za polaznika #{id}</h2>
-      <ul>
-        {mikros.map(mk => (
-          <li key={mk.id}>
-            <strong>{mk.naziv}</strong><br />
-              Ishodi: {mk.ishodiUcenja}<br />
-              Izdato: {new Date(mk.datumIzdavanja).toLocaleDateString()}<br />
-              ESPB: {mk.ESPB}<br />
-              Nivo: {mk.nivo}<br />
-              Trajanje: {mk.trajanje}<br />
-              Oblik: {mk.odrzavanje}<br />
-              Participacija: {mk.formaParticipacije}<br />
-              Vrsta provere: {mk.vrstaProcene}<br />
-              Supervizija: {mk.supervizijaProcene}<br />
-              Osiguranje kvaliteta: {mk.tipOsiguranjaKvaliteta}<br />
-              Integracija: {mk.opcijeIntegracije}<br />
-              Dodatno: {mk.dodatneInformacije}
-              {tip === 'informalni' && (<button onClick={() => apliciranje(mk.id)}>Apliciraj</button>) }
-          </li>
-        ))}
-      </ul>
+      <h2>{naslov}</h2>
+      {mikros.map(mk => 
+      <StudentOsnova key={mk.id} id={id} tip={tip} mk={mk} onApliciraj={izmeniMikrokredencijal}/>)}
     </div>
   );
 }
