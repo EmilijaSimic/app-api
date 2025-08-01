@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ProfesorOsnova from "../MikrokredencijalOsnova/ProfesorOsnova";
 
 type Mikrokredencijal = {
   id: number;
@@ -43,45 +44,14 @@ function ProfesorMikrokredencijali({ id }: Props) {
       .catch(err => console.error(err));
   }, [id]);
 
-const potpisivanje = async (mpId: number) => {
-  await fetch(`http://localhost:3000/mikrokredencijal-polaznik/${mpId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      potpisaoId: id,         
-      ispunjenUslov: true,
-    }),
-  });
-
-  setStavke(prev => prev.filter(mp => mp.id !== mpId));
-};
-
+   const ukloniStavku = (mpId: number) => {
+    setStavke(prev => prev.filter(mp => mp.id !== mpId));
+  };
     return (
     <div>
       <h2>Mikrokredencijali koje treba da potpiše profesor #{id}</h2>
-      <ul>
-        {stavke.map(mp => (
-          <li key={mp.id}>
-            <strong>{mp.mikrokredencijal.naziv}</strong><br />
-              Ishodi: {mp.mikrokredencijal.ishodiUcenja}<br />
-              Izdato: {new Date(mp.mikrokredencijal.datumIzdavanja).toLocaleDateString()}<br />
-              ESPB: {mp.mikrokredencijal.ESPB}<br />
-              Nivo: {mp.mikrokredencijal.nivo}<br />
-              Trajanje: {mp.mikrokredencijal.trajanje}<br />
-              Oblik: {mp.mikrokredencijal.odrzavanje}<br />
-              Participacija: {mp.mikrokredencijal.formaParticipacije}<br />
-              Vrsta provere: {mp.mikrokredencijal.vrstaProcene}<br />
-              Supervizija: {mp.mikrokredencijal.supervizijaProcene}<br />
-              Osiguranje kvaliteta: {mp.mikrokredencijal.tipOsiguranjaKvaliteta}<br />
-              Integracija: {mp.mikrokredencijal.opcijeIntegracije}<br />
-              Dodatno: {mp.mikrokredencijal.dodatneInformacije}<br />
-            <strong>Polaznik: {mp.polaznik.ime} {mp.polaznik.prezime}</strong> ({mp.polaznik.brojIndeksa})<br />
-            <button onClick={() => potpisivanje(mp.id)}>Potpiši</button>
-          </li>
-        ))}
-      </ul>
+      {stavke.map(mp => 
+      <ProfesorOsnova key={mp.id} id={id} mp={mp} onUkloni={ukloniStavku}/>)}
     </div>
   );
 }
