@@ -1,3 +1,5 @@
+import MikrokredencijalPolaznik from '../../components/MikrokredencijalPolaznik/MikrokredencijalPolaznik';
+
 interface Korisnik {
   id: number;
   email: string;
@@ -10,6 +12,6 @@ interface AdminPrikazProps {
 }
 
 function AdminPrikaz({ user }: AdminPrikazProps) {
-  return <h1>admin {user.ime}</h1>;
+  return <MikrokredencijalPolaznik />;
 }
 export default AdminPrikaz;

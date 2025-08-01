@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Mikrokredencijal } from 'src/mikrokredencijal/entities/mikrokredencijal.entity';
 import { OdgovornoLice } from 'src/odgovorno-lice/entities/odgovorno-louse.entity';
@@ -27,6 +27,20 @@ export class MikrokredencijalPolaznikService {
   async create(
     createMikrokredencijalPolaznikDto: CreateMikrokredencijalPolaznikDto,
   ) {
+    const postoji = await this.mikropolaznikRepository.findOne({
+      where: {
+        polaznik: { id: createMikrokredencijalPolaznikDto.polaznikId },
+        mikrokredencijal: {
+          id: createMikrokredencijalPolaznikDto.mikrokredencijalId,
+        },
+      },
+    });
+
+    if (postoji) {
+      throw new BadRequestException(
+        'Već postoji zapis za tog polaznika i mikrokredencijal.',
+      );
+    }
     const mikrokredencijal = await this.mikrokredencijalRepo.findOneBy({
       id: createMikrokredencijalPolaznikDto.mikrokredencijalId,
     });
@@ -37,7 +51,7 @@ export class MikrokredencijalPolaznikService {
       id: createMikrokredencijalPolaznikDto.potpisaoId,
     });
 
-    if (!mikrokredencijal || !polaznik || !odgLice) {
+    if (!mikrokredencijal || !polaznik) {
       throw new Error('Nije pronajeno!');
     }
 
@@ -45,7 +59,6 @@ export class MikrokredencijalPolaznikService {
       ...createMikrokredencijalPolaznikDto,
       polaznik: polaznik,
       mikrokredencijal: mikrokredencijal,
-      potpisao: odgLice,
     });
     return this.mikropolaznikRepository.save(mikrokredencijalPolaznik);
   }
