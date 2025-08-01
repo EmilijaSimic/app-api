@@ -1,4 +1,4 @@
-import Mikrokredencijali from '../../components/Mikrokredencijali';
+import StudentMikrokredencijali from "../../components/Mikrokredencijal/StudentMikrokredencijal";
 
 interface Korisnik {
   id: number;
@@ -10,6 +10,11 @@ interface PolaznikPrikazProps {
   user: Korisnik;
 }
 function PolaznikPrikaz({ user }: PolaznikPrikazProps) {
-  return <Mikrokredencijali id={user.id} tip="potpisani" />;
+  return (
+  <div>
+    <StudentMikrokredencijali id = {user.id} tip = "potpisani"/>
+    <StudentMikrokredencijali id = {user.id} tip = "nepotpisani"/>
+  </div>);
+  //<Mikrokredencijali id={user.id} tip="potpisani" />;
 }
 export default PolaznikPrikaz;

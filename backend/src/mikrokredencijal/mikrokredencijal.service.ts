@@ -132,15 +132,17 @@ export class MikrokredencijalService {
 
     return rezultat.map((mp) => mp.mikrokredencijal);
   }
-
-  async findByProfesor(profesorId: number) {
+    async findByProfesor(profesorId: number) {
     const mikrokredencijali = await this.dataSource
-      .getRepository(Mikrokredencijal)
-      .createQueryBuilder('mk')
-      .leftJoinAndSelect('mk.izvor', 'izvor')
-      .leftJoin('izvor.odgovornaLica', 'prof')
-      .where('prof.id = :id', { id: profesorId })
-      .getMany();
+    .getRepository(MikrokredencijalPolaznik)
+    .createQueryBuilder('mp')
+    .leftJoinAndSelect('mp.mikrokredencijal', 'mk')
+    .leftJoinAndSelect('mk.izvor', 'izvor')
+    .leftJoin('izvor.odgovornaLica', 'prof')
+    .leftJoinAndSelect('mp.polaznik', 'polaznik')
+    .where('prof.id = :profesorId', { profesorId })
+    .andWhere('mp.potpisao IS NULL')
+    .getMany();
 
     return mikrokredencijali;
   }

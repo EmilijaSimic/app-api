@@ -1,4 +1,4 @@
-import Mikrokredencijali from '../../components/Mikrokredencijali';
+import ProfesorMikrokredencijali from "../../components/Mikrokredencijal/ProfesorMikrokredencijal";
 
 interface Korisnik {
   id: number;
@@ -11,6 +11,6 @@ interface OdgovornoLicePrikazProps {
 }
 
 function OdgovornoLicePrikaz({ user }: OdgovornoLicePrikazProps) {
-  return <Mikrokredencijali id={user.id} tip="profesor" />;
+  return <ProfesorMikrokredencijali id={user.id} />;
 }
 export default OdgovornoLicePrikaz;
