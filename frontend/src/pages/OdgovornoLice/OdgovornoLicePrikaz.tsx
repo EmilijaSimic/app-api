@@ -1,6 +1,6 @@
 import LogoutDugme from '../../components/LogoutDugme/LogoutDugme';
 import ProfesorMikrokredencijali from '../../components/Mikrokredencijal/ProfesorMikrokredencijal';
-
+import styles from './OdgovornoLice.module.css';
 interface Korisnik {
   id: number;
   email: string;
@@ -13,10 +13,10 @@ interface OdgovornoLicePrikazProps {
 
 function OdgovornoLicePrikaz({ user }: OdgovornoLicePrikazProps) {
   return (
-    <>
+    <div className={styles.proba}>
       <ProfesorMikrokredencijali id={user.id} />
       <LogoutDugme />
-    </>
+    </div>
   );
 }
 export default OdgovornoLicePrikaz;
