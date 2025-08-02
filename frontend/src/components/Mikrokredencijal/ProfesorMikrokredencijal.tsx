@@ -50,7 +50,7 @@ function ProfesorMikrokredencijali({ id }: Props) {
   };
     return (
     <div>
-      <h2>Mikrokredencijali koje treba da potpiše profesor #{id}</h2>
+      <h2>Zahtevi za potpis</h2>
       <div className={styles.cards}>
       {stavke.map(mp => 
       <ProfesorOsnova key={mp.id} id={id} mp={mp} onUkloni={ukloniStavku}/>)}

@@ -26,6 +26,14 @@ type Mikrokredencijal = {
 
 function StudentOsnova({ id, tip, mk, onApliciraj }: Props){
 
+  var klasa;
+  if(tip==="potpisani"){
+    klasa="potpisani"
+  }else if(tip==="nepotpisani"){
+    klasa="nepotpisani"
+  }else {klasa="informalni"
+  }
+
     const apliciranje = async (mkId: number) => {
 
       fetch('http://localhost:3000/mikrokredencijal-polaznik', {
@@ -60,7 +68,7 @@ function StudentOsnova({ id, tip, mk, onApliciraj }: Props){
 
   return (
     <div className= {styles.card}>
-      <div className={styles.header}>{mk.naziv}</div>
+     <div className={`${styles.header} ${styles[klasa]}`}>{mk.naziv}</div>
       <p><strong>Ishodi:</strong> {mk.ishodiUcenja}</p>
       <p><strong>Izdato:</strong> {new Date(mk.datumIzdavanja).toLocaleDateString()}</p>
       <p><strong>ESPB:</strong> {mk.ESPB}</p>

@@ -1,5 +1,6 @@
 import LogoutDugme from '../../components/LogoutDugme/LogoutDugme';
 import StudentMikrokredencijali from '../../components/Mikrokredencijal/StudentMikrokredencijal';
+import styles from './PolaznikPrikaz.module.css';
 
 interface Korisnik {
   id: number;
@@ -12,13 +13,12 @@ interface PolaznikPrikazProps {
 }
 function PolaznikPrikaz({ user }: PolaznikPrikazProps) {
   return (
-    <div>
+    <div className={styles.mikros}>
       <StudentMikrokredencijali id={user.id} tip="potpisani" />
       <StudentMikrokredencijali id={user.id} tip="nepotpisani" />
       <StudentMikrokredencijali id={user.id} tip="informalni"/>
       <LogoutDugme />
     </div>
   );
-  //<Mikrokredencijali id={user.id} tip="potpisani" />;
 }
 export default PolaznikPrikaz;
