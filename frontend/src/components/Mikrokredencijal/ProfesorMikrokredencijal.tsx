@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ProfesorOsnova from "../MikrokredencijalOsnova/ProfesorOsnova";
+import styles from './ProfesorMikrokredencijal.module.css';
 
 type Mikrokredencijal = {
   id: number;
@@ -50,8 +51,10 @@ function ProfesorMikrokredencijali({ id }: Props) {
     return (
     <div>
       <h2>Mikrokredencijali koje treba da potpiše profesor #{id}</h2>
+      <div className={styles.cards}>
       {stavke.map(mp => 
       <ProfesorOsnova key={mp.id} id={id} mp={mp} onUkloni={ukloniStavku}/>)}
+      </div>
     </div>
   );
 }

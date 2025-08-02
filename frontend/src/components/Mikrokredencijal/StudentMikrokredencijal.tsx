@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import StudentOsnova from '../MikrokredencijalOsnova/StudentOsnova';
+import styles from './StudentMikrokredencijal.module.css';
 
 type Mikrokredencijal = {
   id: number;
@@ -51,8 +52,10 @@ function StudentMikrokredencijali({ id, tip }: Props) {
   return (
     <div>
       <h2>{naslov}</h2>
+      <div className={styles.cards}>
       {mikros.map(mk => 
       <StudentOsnova key={mk.id} id={id} tip={tip} mk={mk} onApliciraj={izmeniMikrokredencijal}/>)}
+      </div>
     </div>
   );
 }

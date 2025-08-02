@@ -1,3 +1,5 @@
+import styles from './StudentOsnova.module.css';
+
 type Props = {
   id: number;  
   tip: 'potpisani' | 'nepotpisani' | 'informalni'; 
@@ -57,21 +59,24 @@ function StudentOsnova({ id, tip, mk, onApliciraj }: Props){
   };
 
   return (
-    <div>
-        <strong>{mk.naziv}</strong><br />
-         Ishodi: {mk.ishodiUcenja}<br />
-         Izdato: {new Date(mk.datumIzdavanja).toLocaleDateString()}<br />
-         ESPB: {mk.ESPB}<br />
-         Nivo: {mk.nivo}<br />
-         Trajanje: {mk.trajanje}<br />
-         Oblik: {mk.odrzavanje}<br />
-         Participacija: {mk.formaParticipacije}<br />
-         Vrsta provere: {mk.vrstaProcene}<br />
-         Supervizija: {mk.supervizijaProcene}<br />
-         Osiguranje kvaliteta: {mk.tipOsiguranjaKvaliteta}<br />
-         Integracija: {mk.opcijeIntegracije}<br />
-         Dodatno: {mk.dodatneInformacije}
-          {tip === 'informalni' && (<button onClick={() => apliciranje(mk.id)}>Apliciraj</button>) }
+    <div className= {styles.card}>
+      <div className={styles.header}>{mk.naziv}</div>
+      <p><strong>Ishodi:</strong> {mk.ishodiUcenja}</p>
+      <p><strong>Izdato:</strong> {new Date(mk.datumIzdavanja).toLocaleDateString()}</p>
+      <p><strong>ESPB:</strong> {mk.ESPB}</p>
+      <p><strong>Nivo:</strong> {mk.nivo}</p>
+      <p><strong>Trajanje:</strong> {mk.trajanje}</p>
+      <p><strong>Oblik:</strong> {mk.odrzavanje}</p>
+      <p><strong>Participacija:</strong> {mk.formaParticipacije}</p>
+      <p><strong>Vrsta provere:</strong> {mk.vrstaProcene}</p>
+      <p><strong>Supervizija:</strong> {mk.supervizijaProcene}</p>
+      <p><strong>Osiguranje kvaliteta:</strong> {mk.tipOsiguranjaKvaliteta}</p>
+      <p><strong>Integracija:</strong> {mk.opcijeIntegracije}</p>
+      <p><strong>Dodatno:</strong> {mk.dodatneInformacije}</p>
+
+      {tip === 'informalni' && (
+        <button className={styles.button} onClick={() => apliciranje(mk.id)}>Apliciraj</button>
+      )}
     </div>
   );
 }

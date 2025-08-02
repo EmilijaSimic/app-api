@@ -1,3 +1,5 @@
+import styles from './ProfesorOsnova.module.css';
+
 type Props = {
     id:number;
     mp:MikrokredencijalPolaznik;
@@ -57,23 +59,23 @@ const odbijanje = async (mpId: number) => {
   onUkloni(mpId);
 };
 
-    return(<div>
-        <strong>{mp.mikrokredencijal.naziv}</strong><br />
-              Ishodi: {mp.mikrokredencijal.ishodiUcenja}<br />
-              Izdato: {new Date(mp.mikrokredencijal.datumIzdavanja).toLocaleDateString()}<br />
-              ESPB: {mp.mikrokredencijal.ESPB}<br />
-              Nivo: {mp.mikrokredencijal.nivo}<br />
-              Trajanje: {mp.mikrokredencijal.trajanje}<br />
-              Oblik: {mp.mikrokredencijal.odrzavanje}<br />
-              Participacija: {mp.mikrokredencijal.formaParticipacije}<br />
-              Vrsta provere: {mp.mikrokredencijal.vrstaProcene}<br />
-              Supervizija: {mp.mikrokredencijal.supervizijaProcene}<br />
-              Osiguranje kvaliteta: {mp.mikrokredencijal.tipOsiguranjaKvaliteta}<br />
-              Integracija: {mp.mikrokredencijal.opcijeIntegracije}<br />
-              Dodatno: {mp.mikrokredencijal.dodatneInformacije}<br />
+    return(<div className={styles.card}>
+            <div className={styles.header}>{mp.mikrokredencijal.naziv}</div>
+            <p><strong>Ishodi:</strong> {mp.mikrokredencijal.ishodiUcenja}</p>
+            <p><strong>Izdato:</strong> {new Date(mp.mikrokredencijal.datumIzdavanja).toLocaleDateString()}</p>
+            <p><strong>ESPB:</strong> {mp.mikrokredencijal.ESPB}</p>
+            <p><strong>Nivo:</strong> {mp.mikrokredencijal.nivo}</p>
+            <p><strong>Trajanje:</strong> {mp.mikrokredencijal.trajanje}</p>
+            <p><strong>Oblik:</strong> {mp.mikrokredencijal.odrzavanje}</p>
+            <p><strong>Participacija:</strong> {mp.mikrokredencijal.formaParticipacije}</p>
+            <p><strong>Vrsta provere:</strong> {mp.mikrokredencijal.vrstaProcene}</p>
+            <p><strong>Supervizija:</strong> {mp.mikrokredencijal.supervizijaProcene}</p>
+            <p><strong>Osiguranje kvaliteta:</strong> {mp.mikrokredencijal.tipOsiguranjaKvaliteta}</p>
+            <p><strong>Integracija:</strong> {mp.mikrokredencijal.opcijeIntegracije}</p>
+            <p><strong>Dodatno:</strong> {mp.mikrokredencijal.dodatneInformacije}</p>
             <strong>Polaznik: {mp.polaznik.ime} {mp.polaznik.prezime}</strong> ({mp.polaznik.brojIndeksa})<br />
-            <button onClick={() => potpisivanje(mp.id)}>Potpiši</button>
-            <button onClick={() => odbijanje(mp.id)}>Odbij</button>
+            <button className={styles.button} onClick={() => potpisivanje(mp.id)}>Potpiši</button>
+            <button className={styles.button} onClick={() => odbijanje(mp.id)}>Odbij</button>
     </div>
     );
 
