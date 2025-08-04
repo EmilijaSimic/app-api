@@ -1,16 +1,16 @@
-*{
+/**{
     margin: 10px;
-}
+}*/
 
 .card {
-  border: 2px solid #555bca;
+  border: 2px solid black;
   width: 400px;
   border-radius: 12px;
   padding: 20px;
   margin: 20px 0;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 480px;
+  max-width: 300px;
   font-family: 'Segoe UI', sans-serif;
   color: black;
 }
@@ -30,7 +30,7 @@ p {
 }
 
 strong {
-    background-color:white;
+  background-color: white;
   color: #444;
 }
 
@@ -50,14 +50,14 @@ strong {
   background-color: #2b2d62;
 }
 
-.potpisani{
+.potpisani {
   background-color: #2e8b57;
 }
 
-.nepotpisani{
-background-color: #e1ad01;
+.nepotpisani {
+  background-color: #e1ad01;
 }
 
-.informalni{
-background-color: #d2691e;
+.informalni {
+  background-color: #d2691e;
 }

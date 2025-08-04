@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import ProfesorOsnova from "../MikrokredencijalOsnova/ProfesorOsnova";
+import { useEffect, useState } from 'react';
+import ProfesorOsnova from '../MikrokredencijalOsnova/ProfesorOsnova';
 import styles from './ProfesorMikrokredencijal.module.css';
 
 type Mikrokredencijal = {
@@ -38,22 +38,27 @@ function ProfesorMikrokredencijali({ id }: Props) {
   const [stavke, setStavke] = useState<MikrokredencijalPolaznik[]>([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/mikrokredencijal/profesor/${id}/mikrokredencijali`)
-      .then(res => res.json())
-      .then(data => {console.log("Dobijeni mikrokredencijali:", data);
-        setStavke(data)})
-      .catch(err => console.error(err));
+    fetch(
+      `http://localhost:3000/mikrokredencijal/profesor/${id}/mikrokredencijali`,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('Dobijeni mikrokredencijali:', data);
+        setStavke(data);
+      })
+      .catch((err) => console.error(err));
   }, [id]);
 
-   const ukloniStavku = (mpId: number) => {
-    setStavke(prev => prev.filter(mp => mp.id !== mpId));
+  const ukloniStavku = (mpId: number) => {
+    setStavke((prev) => prev.filter((mp) => mp.id !== mpId));
   };
-    return (
+  return (
     <div>
-      <h2>Zahtevi za potpis</h2>
+      <h2 className={styles.naslov}>Zahtevi za potpis</h2>
       <div className={styles.cards}>
-      {stavke.map(mp => 
-      <ProfesorOsnova key={mp.id} id={id} mp={mp} onUkloni={ukloniStavku}/>)}
+        {stavke.map((mp) => (
+          <ProfesorOsnova key={mp.id} id={id} mp={mp} onUkloni={ukloniStavku} />
+        ))}
       </div>
     </div>
   );

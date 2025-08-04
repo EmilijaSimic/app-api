@@ -1,10 +1,10 @@
 import styles from './ProfesorOsnova.module.css';
 
 type Props = {
-    id:number;
-    mp:MikrokredencijalPolaznik;
-    onUkloni:(id: number) => void;
-}
+  id: number;
+  mp: MikrokredencijalPolaznik;
+  onUkloni: (id: number) => void;
+};
 
 type Mikrokredencijal = {
   id: number;
@@ -33,35 +33,35 @@ type MikrokredencijalPolaznik = {
     brojIndeksa: string;
   };
 };
-function ProfesorOsnova({id, mp, onUkloni}:Props){
+function ProfesorOsnova({ id, mp, onUkloni }: Props) {
+  const potpisivanje = async (mpId: number) => {
+    await fetch(`http://localhost:3000/mikrokredencijal-polaznik/${mpId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        potpisaoId: id,
+        ispunjenUslov: true,
+      }),
+    });
+    onUkloni(mpId);
+  };
 
-    const potpisivanje = async (mpId: number) => {
-  await fetch(`http://localhost:3000/mikrokredencijal-polaznik/${mpId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      potpisaoId: id,         
-      ispunjenUslov: true,
-    }),
-  });
-  onUkloni(mpId);
-};
+  const odbijanje = async (mpId: number) => {
+    await fetch(`http://localhost:3000/mikrokredencijal-polaznik/${mpId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    onUkloni(mpId);
+  };
 
-const odbijanje = async (mpId: number) => {
-  await fetch(`http://localhost:3000/mikrokredencijal-polaznik/${mpId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  onUkloni(mpId);
-};
-
-    return(<div className={styles.card}>
-            <div className={styles.header}>{mp.mikrokredencijal.naziv}</div>
-            <p><strong>Ishodi:</strong> {mp.mikrokredencijal.ishodiUcenja}</p>
+  return (
+    <div className={styles.card}>
+      <div className={styles.header}>{mp.mikrokredencijal.naziv}</div>
+      {/* <p><strong>Ishodi:</strong> {mp.mikrokredencijal.ishodiUcenja}</p>
             <p><strong>Izdato:</strong> {new Date(mp.mikrokredencijal.datumIzdavanja).toLocaleDateString()}</p>
             <p><strong>ESPB:</strong> {mp.mikrokredencijal.ESPB}</p>
             <p><strong>Nivo:</strong> {mp.mikrokredencijal.nivo}</p>
@@ -72,12 +72,18 @@ const odbijanje = async (mpId: number) => {
             <p><strong>Supervizija:</strong> {mp.mikrokredencijal.supervizijaProcene}</p>
             <p><strong>Osiguranje kvaliteta:</strong> {mp.mikrokredencijal.tipOsiguranjaKvaliteta}</p>
             <p><strong>Integracija:</strong> {mp.mikrokredencijal.opcijeIntegracije}</p>
-            <p><strong>Dodatno:</strong> {mp.mikrokredencijal.dodatneInformacije}</p>
-            <strong>Polaznik: {mp.polaznik.ime} {mp.polaznik.prezime}</strong> ({mp.polaznik.brojIndeksa})<br />
-            <button className={styles.button} onClick={() => potpisivanje(mp.id)}>Potpiši</button>
-            <button className={styles.button} onClick={() => odbijanje(mp.id)}>Odbij</button>
+            <p><strong>Dodatno:</strong> {mp.mikrokredencijal.dodatneInformacije}</p> */}
+      <strong>
+        Polaznik: {mp.polaznik.ime} {mp.polaznik.prezime}
+      </strong>{' '}
+      ({mp.polaznik.brojIndeksa})<br />
+      <button className={styles.button} onClick={() => potpisivanje(mp.id)}>
+        Potpiši
+      </button>
+      <button className={styles.button} onClick={() => odbijanje(mp.id)}>
+        Odbij
+      </button>
     </div>
-    );
-
+  );
 }
 export default ProfesorOsnova;

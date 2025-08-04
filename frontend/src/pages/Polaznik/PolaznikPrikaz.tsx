@@ -16,7 +16,7 @@ function PolaznikPrikaz({ user }: PolaznikPrikazProps) {
     <div className={styles.mikros}>
       <StudentMikrokredencijali id={user.id} tip="potpisani" />
       <StudentMikrokredencijali id={user.id} tip="nepotpisani" />
-      <StudentMikrokredencijali id={user.id} tip="informalni"/>
+      <StudentMikrokredencijali id={user.id} tip="informalni" />
       <LogoutDugme />
     </div>
   );

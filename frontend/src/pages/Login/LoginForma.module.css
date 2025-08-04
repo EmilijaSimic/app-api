@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   background-image: url('/young-students-learning-together-group-study.jpg');
-  background-size: cover; /* ili 'contain' ako želiš da cela slika stane bez sečenja */
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
