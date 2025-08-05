@@ -1,5 +1,4 @@
-
 export class UpdateMikrokredencijalPolaznikDto {
-    potpisaoId: number;
-    ispunjenUslov: boolean;
+  potpisaoId: number;
+  ispunjenUslov: boolean;
 }

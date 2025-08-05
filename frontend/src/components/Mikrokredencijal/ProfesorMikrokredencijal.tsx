@@ -53,8 +53,8 @@ function ProfesorMikrokredencijali({ id }: Props) {
     setStavke((prev) => prev.filter((mp) => mp.id !== mpId));
   };
   return (
-    <div>
-      <h2 className={styles.naslov}>Zahtevi za potpis</h2>
+    <div className={styles.okvir}>
+      <h2 className={styles.naslov}>Trenutni zahtevi</h2>
       <div className={styles.cards}>
         {stavke.map((mp) => (
           <ProfesorOsnova key={mp.id} id={id} mp={mp} onUkloni={ukloniStavku} />

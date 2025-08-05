@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
+import styles from './LogoutDugme.module.css';
 function LogoutDugme() {
   const navigate = useNavigate();
   const handleClick = () => {
@@ -7,6 +7,10 @@ function LogoutDugme() {
     localStorage.removeItem('token');
     navigate('/login');
   };
-  return <button onClick={handleClick}> Odjavi se</button>;
+  return (
+    <button onClick={handleClick} className={styles.dugme}>
+      Odjavi se
+    </button>
+  );
 }
 export default LogoutDugme;

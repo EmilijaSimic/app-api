@@ -13,9 +13,13 @@ interface OdgovornoLicePrikazProps {
 
 function OdgovornoLicePrikaz({ user }: OdgovornoLicePrikazProps) {
   return (
-    <div className={styles.proba}>
-      <ProfesorMikrokredencijali id={user.id} />
-      <LogoutDugme />
+    <div className={styles.wrapper}>
+      <div className={styles.logout}>
+        <LogoutDugme />
+      </div>
+      <div className={styles.content}>
+        <ProfesorMikrokredencijali id={user.id} />
+      </div>
     </div>
   );
 }

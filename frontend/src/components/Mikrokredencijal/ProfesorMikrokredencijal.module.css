@@ -7,5 +7,12 @@
 }
 
 .naslov {
-  color: #555bca;
+  color: rgb(111, 47, 58);
+}
+
+.okvir {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

@@ -73,16 +73,19 @@ function ProfesorOsnova({ id, mp, onUkloni }: Props) {
             <p><strong>Osiguranje kvaliteta:</strong> {mp.mikrokredencijal.tipOsiguranjaKvaliteta}</p>
             <p><strong>Integracija:</strong> {mp.mikrokredencijal.opcijeIntegracije}</p>
             <p><strong>Dodatno:</strong> {mp.mikrokredencijal.dodatneInformacije}</p> */}
-      <strong>
-        Polaznik: {mp.polaznik.ime} {mp.polaznik.prezime}
-      </strong>{' '}
-      ({mp.polaznik.brojIndeksa})<br />
-      <button className={styles.button} onClick={() => potpisivanje(mp.id)}>
-        Potpiši
-      </button>
-      <button className={styles.button} onClick={() => odbijanje(mp.id)}>
-        Odbij
-      </button>
+      <p className={styles.polaznik}>
+        Polaznik: {mp.polaznik.ime} {mp.polaznik.prezime} (
+        {mp.polaznik.brojIndeksa}){' '}
+      </p>
+      <br />
+      <div className={styles.opcije}>
+        <button className={styles.dugme} onClick={() => potpisivanje(mp.id)}>
+          Potpiši
+        </button>
+        <button className={styles.dugme} onClick={() => odbijanje(mp.id)}>
+          Odbij
+        </button>
+      </div>
     </div>
   );
 }
