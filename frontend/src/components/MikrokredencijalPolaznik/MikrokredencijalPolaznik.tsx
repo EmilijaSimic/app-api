@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import Select from 'react-select';
+import Select, { StylesConfig } from 'react-select';
+
+import styles from './MikrokredencijalPolaznik.module.css';
 
 type Option = { value: number; label: string };
 function MikrokredencijalPolaznik() {
@@ -31,7 +33,39 @@ function MikrokredencijalPolaznik() {
       });
   }, []);
 
+  const customStyles: StylesConfig<Option, false> = {
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? 'rgb(172, 200, 253)' : 'white',
+      color: 'rgb(42, 96, 197)',
+      padding: 10,
+      cursor: 'pointer',
+    }),
+    control: (provided) => ({
+      ...provided,
+      borderColor: '#ccc',
+      boxShadow: 'none',
+      '&:hover': {
+        borderColor: '#999',
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      zIndex: 10,
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: 'rgb(42, 96, 197)',
+    }),
+  };
+
   const handleSubmit = () => {
+    const opis = window.prompt('Unesite koje preduslove je ispunio kandidat:');
+
+    if (opis === null || opis.trim() === '') {
+      alert('Odobravanje otkazano. Opis uslova je obavezan.');
+      return;
+    }
     if (selectedPolaznik && selectedMikro) {
       fetch('http://localhost:3000/mikrokredencijal-polaznik', {
         method: 'POST',
@@ -42,7 +76,7 @@ function MikrokredencijalPolaznik() {
           potpisaoId: null,
           blokcejnZapis: ' ',
           ispunjenUslov: false,
-          opisUslova: ' ',
+          opisUslova: opis,
         }),
       })
         .then(async (res) => {
@@ -66,22 +100,26 @@ function MikrokredencijalPolaznik() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '0 auto' }}>
-      <h2>Dodaj polaznika na mikrokredencijal</h2>
+    <div style={{ maxWidth: 700, margin: '0 auto' }}>
+      <h2 className={styles.naslov}>Dodajte polaznika na mikrokredencijal</h2>
+      <div className={styles.okvir}>
+        <label className={styles.naslov}>Polaznik:</label>
+        <Select
+          options={polaznici}
+          onChange={(option) => setSelectedPolaznik(option?.value ?? null)}
+          styles={customStyles}
+        />
 
-      <label>Polaznik:</label>
-      <Select
-        options={polaznici}
-        onChange={(option) => setSelectedPolaznik(option?.value ?? null)}
-      />
-
-      <label style={{ marginTop: '1rem' }}>Mikrokredencijal:</label>
-      <Select
-        options={mikrokredencijali}
-        onChange={(option) => setSelectedMikro(option?.value ?? null)}
-      />
-
-      <button style={{ marginTop: '1rem' }} onClick={handleSubmit}>
+        <label style={{ marginTop: '1rem' }} className={styles.naslov}>
+          Mikrokredencijal:
+        </label>
+        <Select
+          options={mikrokredencijali}
+          onChange={(option) => setSelectedMikro(option?.value ?? null)}
+          styles={customStyles}
+        />
+      </div>
+      <button onClick={handleSubmit} className={styles.dugme}>
         Dodaj prijavu
       </button>
     </div>

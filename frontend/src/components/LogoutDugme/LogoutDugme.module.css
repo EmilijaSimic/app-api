@@ -1,0 +1,7 @@
+.dugme {
+  background-color: rgb(42, 96, 197);
+}
+
+.dugme:hover {
+  border: 1.5px solid rgb(30, 81, 174);
+}

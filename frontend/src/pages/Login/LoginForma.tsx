@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import styles from './LoginForma.module.css';
 interface Korisnik {
   id: number;
   email: string;
@@ -54,33 +54,37 @@ function LoginForma({ setUser }: LoginFormaProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 320, margin: '0 auto' }}>
-      <h2>Prijava</h2>
+    <div className={styles.pozadina}>
+      <div className={styles.okvir}>
+        <form onSubmit={handleSubmit} className={styles.forma}>
+          <h2>Prijavite se</h2>
+          <div className={styles.polja}>
+            <label>Email:</label>
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="username"
+            />
 
-      <label>Email:</label>
-      <input
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        autoComplete="username"
-      />
+            <label>Lozinka:</label>
+            <input
+              type="password"
+              value={lozinka}
+              onChange={(e) => setLozinka(e.target.value)}
+              required
+              autoComplete="current-password"
+            />
 
-      <label style={{ marginTop: 10 }}>Lozinka:</label>
-      <input
-        type="password"
-        value={lozinka}
-        onChange={(e) => setLozinka(e.target.value)}
-        required
-        autoComplete="current-password"
-      />
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      <button type="submit" style={{ marginTop: 15 }}>
-        Prijavi se
-      </button>
-    </form>
+            {error && <p className={styles.greska}>{error}</p>}
+          </div>
+          <button className={styles.dugme} type="submit">
+            Prijavi se
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

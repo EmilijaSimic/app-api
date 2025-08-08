@@ -1,6 +1,6 @@
 import LogoutDugme from '../../components/LogoutDugme/LogoutDugme';
 import MikrokredencijalPolaznik from '../../components/MikrokredencijalPolaznik/MikrokredencijalPolaznik';
-
+import styles from './AdminPrikaz.module.css';
 interface Korisnik {
   id: number;
   email: string;
@@ -14,10 +14,14 @@ interface AdminPrikazProps {
 
 function AdminPrikaz({ user }: AdminPrikazProps) {
   return (
-    <>
-      <MikrokredencijalPolaznik />;
-      <LogoutDugme />
-    </>
+    <div className={styles.wrapper}>
+      <div className={styles.logout}>
+        <LogoutDugme />
+      </div>
+      <div className={styles.content}>
+        <MikrokredencijalPolaznik />
+      </div>
+    </div>
   );
 }
 export default AdminPrikaz;

@@ -1,0 +1,73 @@
+body {
+  background-color: rgb(172, 200, 253);
+
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.upper {
+  min-height: 100vh;
+  min-width: 100vw;
+  background-image: url('/pozadinaa.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.buttons {
+  margin-bottom: 100px;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background: rgb(42, 96, 197);
+  color: white;
+  border: none;
+  padding: 0.9rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 180px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.btn.active {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(34, 33, 255, 0.28);
+}
+
+.logout {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
+}
+
+.mikros {
+  background-color: white;
+  width: 100%;
+  min-height: 60vh;
+  padding: 4rem 1rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
