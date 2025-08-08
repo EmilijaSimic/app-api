@@ -51,7 +51,7 @@ function StudentMikrokredencijali({ id, tip }: Props) {
 
   return (
     <div>
-      <h2>{naslov}</h2>
+      <h2 className={styles.title}>{naslov}</h2>
       <div className={styles.cards}>
       {mikros.map(mk => 
       <StudentOsnova key={mk.id} id={id} tip={tip} mk={mk} onApliciraj={izmeniMikrokredencijal}/>)}
