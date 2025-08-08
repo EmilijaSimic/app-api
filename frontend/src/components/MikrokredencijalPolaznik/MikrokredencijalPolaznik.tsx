@@ -36,8 +36,8 @@ function MikrokredencijalPolaznik() {
   const customStyles: StylesConfig<Option, false> = {
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? 'rgb(241, 227, 227)' : 'white',
-      color: 'rgb(111, 47, 58)',
+      backgroundColor: state.isFocused ? 'rgb(172, 200, 253)' : 'white',
+      color: 'rgb(42, 96, 197)',
       padding: 10,
       cursor: 'pointer',
     }),
@@ -55,7 +55,7 @@ function MikrokredencijalPolaznik() {
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: 'rgb(111, 47, 58)',
+      color: 'rgb(42, 96, 197)',
     }),
   };
 

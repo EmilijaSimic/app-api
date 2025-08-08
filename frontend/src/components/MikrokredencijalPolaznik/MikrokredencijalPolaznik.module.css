@@ -1,5 +1,5 @@
 .naslov {
-  color: rgb(111, 47, 58);
+  color: rgb(42, 96, 197);
 }
 .okvir {
   display: flex;
@@ -8,10 +8,10 @@
 }
 
 .dugme {
-  background-color: rgb(111, 47, 58);
+  background-color: rgb(42, 96, 197);
   margin-top: 3rem;
 }
 
 .dugme:hover {
-  border: 1.5px solid rgb(68, 10, 10);
+  border: 1.5px solid rgb(30, 81, 174);
 }

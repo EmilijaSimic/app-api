@@ -3,7 +3,7 @@
 }*/
 
 .card {
-  border: 2px solid rgb(111, 47, 58);
+  border: 2px solid rgb(42, 96, 197);
   width: 400px;
   border-radius: 12px;
   padding: 20px;
@@ -20,7 +20,7 @@
 }
 
 .header {
-  background-color: rgb(111, 47, 58);
+  background-color: rgb(42, 96, 197);
   color: white;
   font-weight: bold;
   padding: 8px;
@@ -38,7 +38,7 @@
 }
 
 .dugme {
-  background-color: rgb(111, 47, 58);
+  background-color: rgb(42, 96, 197);
   color: white;
   border: none;
   padding: 10px 16px;
@@ -49,7 +49,7 @@
 }
 
 .dugme:hover {
-  border: 1px solid rgb(68, 10, 10);
+  border: 1px solid rgb(30, 81, 174);
 }
 
 .opcije {

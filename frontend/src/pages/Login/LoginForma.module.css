@@ -60,3 +60,8 @@ input {
 .dugme {
   background-color: rgb(42, 96, 197);
 }
+
+.greska {
+  background-color: transparent;
+  color: white;
+}

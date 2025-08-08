@@ -77,7 +77,7 @@ function LoginForma({ setUser }: LoginFormaProps) {
               autoComplete="current-password"
             />
 
-            {error && <p>{error}</p>}
+            {error && <p className={styles.greska}>{error}</p>}
           </div>
           <button className={styles.dugme} type="submit">
             Prijavi se
