@@ -8,7 +8,7 @@ body {
 .upper {
   min-height: 100vh;
   min-width: 100vw;
-  background-image: url('/polaznik_pozadinaa.jpeg');
+  background-image: url('/pozadinaa.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
